@@ -15,7 +15,7 @@ func main() {
 
 	window, err := ui.CreateWindow("Test", 800, 600, true)
 	if err != nil {
-		panic(fmt.Errorf("could not create opengl renderer: %v", err))
+		panic(fmt.Errorf("could not create window: %v", err))
 	}
 	defer window.Destroy()
 
