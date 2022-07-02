@@ -11,3 +11,7 @@ func InitGLFW() {
 		panic(fmt.Errorf("could not initialize glfw: %v", err))
 	}
 }
+
+func TerminateGLFW() {
+	glfw.Terminate()
+}

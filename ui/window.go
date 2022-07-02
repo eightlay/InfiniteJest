@@ -9,17 +9,17 @@ import (
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
-func init() {
-	graphicsdriver.Init()
-}
-
 // Window struct
 type Window struct {
 	window *glfw.Window
 }
 
 // Create a window with the given parameters
-func CreateWindow(title string, width, height int, resizable bool) *Window {
+func CreateWindow(title string, width, height int, resizable bool) (*Window, error) {
+	if !graphicsdriver.IsInitialized() {
+		return nil, fmt.Errorf("you must call ui.Init() before calling CreateWindow")
+	}
+
 	// OpenGL context should be compatible with the major version 4
 	// and minor version 1
 	glfw.WindowHint(glfw.ContextVersionMajor, 4)
@@ -38,7 +38,7 @@ func CreateWindow(title string, width, height int, resizable bool) *Window {
 
 	window, err := glfw.CreateWindow(width, height, title, nil, nil)
 	if err != nil {
-		panic(fmt.Errorf("could not create opengl renderer: %v", err))
+		return nil, err
 	}
 
 	// MakeContextCurrent is what actually creates the OpenGL context
@@ -47,7 +47,7 @@ func CreateWindow(title string, width, height int, resizable bool) *Window {
 
 	graphicsdriver.DefaultColor(graphics.CreateColor())
 
-	return &Window{window}
+	return &Window{window}, nil
 }
 
 func (w *Window) IsRunning() bool {
@@ -64,4 +64,8 @@ func (w *Window) Handle() {
 	// button, so that the window can close (and, of course, all other events,
 	// including input events)
 	glfw.PollEvents()
+}
+
+func (w *Window) Destroy() {
+	w.window.Destroy()
 }

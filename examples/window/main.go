@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"runtime"
 
 	"github.com/eightlay/InfiniteJest/ui"
@@ -9,7 +10,14 @@ import (
 func main() {
 	runtime.LockOSThread()
 
-	window := ui.CreateWindow("Test", 800, 600, true)
+	ui.Init()
+	defer ui.Terminate()
+
+	window, err := ui.CreateWindow("Test", 800, 600, true)
+	if err != nil {
+		panic(fmt.Errorf("could not create opengl renderer: %v", err))
+	}
+	defer window.Destroy()
 
 	for window.IsRunning() {
 		window.Handle()

@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"fmt"
 	"runtime"
 	"testing"
 
@@ -10,7 +11,14 @@ import (
 func TestWindow(t *testing.T) {
 	runtime.LockOSThread()
 
-	window := ui.CreateWindow("Test", 800, 600, true)
+	ui.Init()
+	defer ui.Terminate()
+
+	window, err := ui.CreateWindow("Test", 800, 600, true)
+	if err != nil {
+		panic(fmt.Errorf("could not create opengl renderer: %v", err))
+	}
+	defer window.Destroy()
 
 	window.IsRunning()
 	window.Handle()
