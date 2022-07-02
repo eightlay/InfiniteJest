@@ -4,6 +4,7 @@ Game engine written in GO
 ## Features
 - Entity Component System with Events
 - Graphics engine *(not implemented, next step)*
+- Audio engine *(not implemented, in queue)*
 - Online engigne *(not implemented, in queue)*
 - AI engine *(not implemented, in queue)*
 
@@ -11,6 +12,7 @@ Game engine written in GO
 ### Available examples
 - ECS system (examples/ecs)
 - ECS system with Events (examples/events)
+- Window creation (examples/window)
 
 ### Usage
 ```
