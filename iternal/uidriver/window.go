@@ -14,21 +14,12 @@ func CreateWindow(title string, width, height int, resizable bool) (*glfw.Window
 		return nil, fmt.Errorf("you must call ui.Init() before calling CreateWindow")
 	}
 
-	// OpenGL context should be compatible with the major version 4
-	// and minor version 1
-	glfw.WindowHint(glfw.ContextVersionMajor, 4)
-	glfw.WindowHint(glfw.ContextVersionMinor, 1)
 	// Is resizing window allowed
 	if resizable {
 		glfw.WindowHint(glfw.Resizable, glfw.True)
 	} else {
 		glfw.WindowHint(glfw.Resizable, glfw.False)
 	}
-	// OpenGL profile in this case should be core.
-	glfw.WindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
-	// When compiling on Mac and using this specific version of OpenGL,
-	// it’s a required hint for it to work.
-	glfw.WindowHint(glfw.OpenGLForwardCompatible, glfw.True)
 
 	window, err := glfw.CreateWindow(width, height, title, nil, nil)
 	if err != nil {

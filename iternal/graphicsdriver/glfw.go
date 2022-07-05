@@ -5,7 +5,20 @@ import (
 )
 
 func InitGLFW() error {
-	return glfw.Init()
+	err := glfw.Init()
+
+	// OpenGL context should be compatible with the major version 4
+	// and minor version 1
+	glfw.WindowHint(glfw.ContextVersionMajor, 4)
+	glfw.WindowHint(glfw.ContextVersionMinor, 1)
+
+	// OpenGL profile in this case should be core.
+	glfw.WindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
+
+	// Depends on target OS
+	InitGLFW_OS()
+
+	return err
 }
 
 func TerminateGLFW() {
