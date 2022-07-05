@@ -13,6 +13,7 @@ Game engine written in GO
 - ECS system (examples/ecs)
 - ECS system with Events (examples/events)
 - Window creation (examples/window)
+- Triangle creation (examples/triangle) 
 
 ### Usage
 ```
