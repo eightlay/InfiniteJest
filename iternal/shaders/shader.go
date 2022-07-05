@@ -10,7 +10,7 @@ import (
 func compileShader(source string, shaderType uint32) (uint32, error) {
 	shader := gl.CreateShader(shaderType)
 
-	cstrs, free := gl.Strs()
+	cstrs, free := gl.Strs(source)
 	gl.ShaderSource(shader, 1, cstrs, nil)
 	free()
 
