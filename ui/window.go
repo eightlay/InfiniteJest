@@ -14,6 +14,10 @@ func (w *Window) IsRunning() bool {
 	return !w.window.ShouldClose()
 }
 
+func (*Window) Clear() {
+	uidriver.Clear()
+}
+
 func (w *Window) Handle() {
 	uidriver.HandleWindow(w.window)
 }
