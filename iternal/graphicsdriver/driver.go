@@ -2,17 +2,30 @@ package graphicsdriver
 
 import "fmt"
 
+// Indicate if graphics driver was initialized
 var initialized bool = false
 
 // Initialize graphics driver
 func Init() error {
+	err := error(nil)
+
 	if !IsInitialized() {
-		InitGL()
-		InitGLFW()
+		err = InitGL()
+		if err != nil {
+			return err
+		}
+
+		err = InitGLFW()
+		if err != nil {
+			return err
+		}
+
 		initialized = true
-		return nil
+	} else {
+		err = fmt.Errorf("graphics driver is already initialized")
 	}
-	return fmt.Errorf("graphics are already initialized")
+
+	return err
 }
 
 // Terminate graphics driver
@@ -22,7 +35,7 @@ func Terminate() error {
 		initialized = false
 		return nil
 	}
-	return fmt.Errorf("graphics are already terminated")
+	return fmt.Errorf("graphics driver is not initialized")
 }
 
 // Check if graphics driver is initialized

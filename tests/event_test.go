@@ -3,13 +3,15 @@ package tests
 import (
 	"testing"
 
+	ij "github.com/eightlay/InfiniteJest"
+
 	"github.com/eightlay/InfiniteJest/ecs"
 	event_example "github.com/eightlay/InfiniteJest/examples/events/events"
 )
 
 func TestEvents(t *testing.T) {
 	target_len := 2
-	target_pos := 4
+	target_pos := 4.0
 
 	w := ecs.World{}
 	w.Init()
@@ -25,7 +27,7 @@ func TestEvents(t *testing.T) {
 	}
 
 	comp, _ := entities[0].Component("Position")
-	pos := comp.(*event_example.Position)
+	pos := comp.(*ij.Position)
 
 	if pos.Y != target_pos {
 		t.Fatalf("Physics doesn't work")

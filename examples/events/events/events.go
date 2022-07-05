@@ -1,24 +1,17 @@
 package event_example
 
 import (
+	ij "github.com/eightlay/InfiniteJest"
+
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/eightlay/InfiniteJest/ecs"
 	"github.com/google/uuid"
 )
 
-/* Poistion component */
-type Position struct {
-	Y int
-}
-
-func (*Position) ID() ecs.ComponentID {
-	return "Position"
-}
-
 /* Physics system */
 type Physics struct {
 	entities map[uuid.UUID]*ecs.Entity
-	gravity  int
+	gravity  float64
 }
 
 func (p *Physics) Init() {
@@ -33,7 +26,7 @@ func (p *Physics) Update(em *ecs.EventManager) {
 			panic("Wrong entity in system")
 		}
 
-		pos := c.(*Position)
+		pos := c.(*ij.Position)
 		pos.Y -= p.gravity
 	}
 }
@@ -54,15 +47,15 @@ func (p *Physics) RemoveEntity(id uuid.UUID) {
 
 /* Bullet creation system */
 type Bulleting struct {
-	initY int
+	initY float64
 }
 
 func (b *Bulleting) Init() {
-	b.initY = 5
+	b.initY = 5.0
 }
 
 func (b *Bulleting) Update(em *ecs.EventManager) {
-	em.Receive(ecs.CreateEvent(&Position{Y: b.initY}))
+	em.Receive(ecs.CreateEvent(&ij.Position{Y: b.initY}))
 }
 
 func (*Bulleting) NeedComponents() mapset.Set[ecs.ComponentID] {
