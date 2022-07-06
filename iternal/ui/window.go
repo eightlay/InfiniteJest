@@ -1,4 +1,4 @@
-package uidriver
+package ui
 
 import (
 	"fmt"

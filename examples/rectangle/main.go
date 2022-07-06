@@ -5,7 +5,7 @@ import (
 	"runtime"
 
 	"github.com/eightlay/InfiniteJest/iternal/graphics"
-	"github.com/eightlay/InfiniteJest/iternal/shaders"
+	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders"
 	"github.com/eightlay/InfiniteJest/ui"
 )
 

@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"github.com/eightlay/InfiniteJest/iternal/uidriver"
+	uidriver "github.com/eightlay/InfiniteJest/iternal/ui"
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
