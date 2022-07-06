@@ -10,12 +10,16 @@ import (
 )
 
 var (
-	triangle = []float32{
-		0.0, 0.5, 0.0, // top
-		-0.5, -0.5, 0.0, // left
-		0.5, -0.5, 0.0, //right
+	rectangle = []float32{
+		0.5, 0.5, 0.0, // top right
+		0.5, -0.5, 0.0, // bottom right
+		-0.5, -0.5, 0.0, // bottom left
+		-0.5, 0.5, 0.0, // top left
 	}
-	indices = []uint32{0, 1, 2}
+	indices = []uint32{
+		0, 1, 3, // first triangle
+		1, 2, 3, // second triangle
+	}
 )
 
 func main() {
@@ -42,8 +46,8 @@ func main() {
 		panic(fmt.Errorf("could not create program: %v", err))
 	}
 
-	// Create VAO
-	vao, err := graphics.CreateDrawable(triangle, indices)
+	// Create ebo
+	ebo, err := graphics.CreateDrawable(rectangle, indices)
 	if err != nil {
 		panic(fmt.Errorf("could not create vao: %v", err))
 	}
@@ -53,7 +57,7 @@ func main() {
 		window.Clear()
 
 		program.Use()
-		vao.Draw()
+		ebo.Draw()
 
 		window.Handle()
 	}
