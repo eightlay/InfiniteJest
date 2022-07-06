@@ -6,13 +6,13 @@ import (
 
 // Drawable object
 type Drawable struct {
-	vao            uint32
+	id             uint32
 	verticesNumber int32
 }
 
 // Draw object to the window
 func (d *Drawable) Draw() {
-	gl.BindVertexArray(d.vao)
+	gl.BindVertexArray(d.id)
 	gl.DrawElementsWithOffset(gl.TRIANGLES, int32(d.verticesNumber), gl.UNSIGNED_INT, 0)
 }
 
@@ -31,9 +31,15 @@ func CreateDrawable(verts []float32, indices []uint32) (*Drawable, error) {
 	gl.BindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo)
 	gl.BufferData(gl.ELEMENT_ARRAY_BUFFER, 4*len(indices), gl.Ptr(indices), gl.STATIC_DRAW)
 
-	// 5th argument = 3 * sizeof(float32)
-	gl.VertexAttribPointerWithOffset(0, 3, gl.FLOAT, false, 12, 0)
+	// Position attribute
+	// 5th argument = (3 + 2) * sizeof(float32)
+	gl.VertexAttribPointerWithOffset(0, 3, gl.FLOAT, false, 20, 0)
 	gl.EnableVertexAttribArray(0)
+
+	// Texture coord attribute
+	// 6th argument = 3 * sizeof(float32)
+	gl.VertexAttribPointerWithOffset(1, 2, gl.FLOAT, false, 20, 12)
+	gl.EnableVertexAttribArray(1)
 
 	gl.BindBuffer(gl.ARRAY_BUFFER, 0)
 	gl.BindVertexArray(0)

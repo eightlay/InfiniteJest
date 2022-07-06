@@ -6,24 +6,20 @@ import (
 
 	"github.com/eightlay/InfiniteJest/iternal/graphics"
 	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders"
+	"github.com/eightlay/InfiniteJest/iternal/graphics/textures"
 	"github.com/eightlay/InfiniteJest/ui"
 )
 
 var (
 	// Vertices of the triangle
-	triangleCoords = []float32{
-		0.0, 0.5, 0.0, // top
-		-0.5, -0.5, 0.0, // left
-		0.5, -0.5, 0.0, //right
+	triangle = []float32{
+		// positions     // texture coords
+		+0.0, +0.5, 0.0, 0.0, 0.0, // top
+		-0.5, -0.5, 0.0, 1.0, 0.0, // left
+		+0.5, -0.5, 0.0, 0.5, 1.0, // right
 	}
 	// Triangle's vertices indices to use
-	triangleIndices = []uint32{0, 1, 2}
-	// Texture coordinates
-	textureCoords = []float32{
-		0.0, 0.0, // lower-left corner
-		1.0, 0.0, // lower-right corner
-		0.5, 1.0, // top-center corner
-	}
+	indices = []uint32{0, 1, 2}
 )
 
 func main() {
@@ -44,22 +40,29 @@ func main() {
 	}
 	defer window.Destroy()
 
-	// Create program
+	// Create shader
 	shader, err := shaders.GetDefaultShader()
 	if err != nil {
-		panic(fmt.Errorf("could not create program: %v", err))
+		panic(fmt.Errorf("could not create shader: %v", err))
 	}
 
-	// Create Drawable
-	drawable, err := graphics.CreateDrawable(triangleCoords, triangleIndices)
+	// Create drawable
+	drawable, err := graphics.CreateDrawable(triangle, indices)
 	if err != nil {
-		panic(fmt.Errorf("could not create vao: %v", err))
+		panic(fmt.Errorf("could not create drawable: %v", err))
+	}
+
+	// Create texture
+	texture, err := textures.CreateTexture("wall.png")
+	if err != nil {
+		panic(fmt.Errorf("could not create texture: %v", err))
 	}
 
 	// Handle window
 	for window.IsRunning() {
 		window.Clear()
 
+		texture.Bind()
 		shader.Use()
 		drawable.Draw()
 

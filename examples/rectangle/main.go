@@ -6,16 +6,18 @@ import (
 
 	"github.com/eightlay/InfiniteJest/iternal/graphics"
 	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders"
+	"github.com/eightlay/InfiniteJest/iternal/graphics/textures"
 	"github.com/eightlay/InfiniteJest/ui"
 )
 
 var (
 	// Vertices of the rectangle
 	rectangle = []float32{
-		0.5, 0.5, 0.0, // top right
-		0.5, -0.5, 0.0, // bottom right
-		-0.5, -0.5, 0.0, // bottom left
-		-0.5, 0.5, 0.0, // top left
+		// positions     // texture coords
+		+0.5, +0.5, 0.0, 1.0, 1.0, // top right
+		+0.5, -0.5, 0.0, 1.0, 0.0, // bottom right
+		-0.5, -0.5, 0.0, 0.0, 0.0, // bottom left
+		-0.5, +0.5, 0.0, 0.0, 1.0, // top left
 	}
 	// Rectangle's vertices indices to use
 	indices = []uint32{
@@ -42,22 +44,29 @@ func main() {
 	}
 	defer window.Destroy()
 
-	// Create program
+	// Create shader
 	shader, err := shaders.GetDefaultShader()
 	if err != nil {
-		panic(fmt.Errorf("could not create program: %v", err))
+		panic(fmt.Errorf("could not create shader: %v", err))
 	}
 
-	// Create Drawable
+	// Create drawable
 	drawable, err := graphics.CreateDrawable(rectangle, indices)
 	if err != nil {
-		panic(fmt.Errorf("could not create vao: %v", err))
+		panic(fmt.Errorf("could not create drawable: %v", err))
+	}
+
+	// Create texture
+	texture, err := textures.CreateTexture("wall.png")
+	if err != nil {
+		panic(fmt.Errorf("could not create texture: %v", err))
 	}
 
 	// Handle window
 	for window.IsRunning() {
 		window.Clear()
 
+		texture.Bind()
 		shader.Use()
 		drawable.Draw()
 
