@@ -39,7 +39,7 @@ func main() {
 	defer window.Destroy()
 
 	// Create program
-	program, err := shaders.GetBasicProgram()
+	shader, err := shaders.GetDefaultShader()
 	if err != nil {
 		panic(fmt.Errorf("could not create program: %v", err))
 	}
@@ -54,7 +54,7 @@ func main() {
 	for window.IsRunning() {
 		window.Clear()
 
-		program.Use()
+		shader.Use()
 		drawable.Draw()
 
 		window.Handle()
