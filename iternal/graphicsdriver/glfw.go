@@ -4,6 +4,7 @@ import (
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
+// Initialize GLFW
 func InitGLFW() error {
 	err := glfw.Init()
 
@@ -21,6 +22,7 @@ func InitGLFW() error {
 	return err
 }
 
+// Terminate GLFW
 func TerminateGLFW() {
 	glfw.Terminate()
 }

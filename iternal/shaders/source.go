@@ -1,6 +1,7 @@
 package shaders
 
 const (
+	// Basic vertex shader
 	VertexShaderSource = `
 		#version 330 core
 		layout (location = 0) in vec3 aPos;
@@ -10,6 +11,7 @@ const (
 		}
 	` + "\x00"
 
+	// Basic fragment shader
 	FragmentShaderSource = `
 		#version 330 core
 		out vec4 FragColor;

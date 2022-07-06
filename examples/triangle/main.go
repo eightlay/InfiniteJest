@@ -10,11 +10,13 @@ import (
 )
 
 var (
+	// Vertices of the triangle
 	triangle = []float32{
 		0.0, 0.5, 0.0, // top
 		-0.5, -0.5, 0.0, // left
 		0.5, -0.5, 0.0, //right
 	}
+	// Triangle's vertices indices to use
 	indices = []uint32{0, 1, 2}
 )
 
@@ -42,8 +44,8 @@ func main() {
 		panic(fmt.Errorf("could not create program: %v", err))
 	}
 
-	// Create VAO
-	vao, err := graphics.CreateDrawable(triangle, indices)
+	// Create Drawable
+	drawable, err := graphics.CreateDrawable(triangle, indices)
 	if err != nil {
 		panic(fmt.Errorf("could not create vao: %v", err))
 	}
@@ -53,7 +55,7 @@ func main() {
 		window.Clear()
 
 		program.Use()
-		vao.Draw()
+		drawable.Draw()
 
 		window.Handle()
 	}

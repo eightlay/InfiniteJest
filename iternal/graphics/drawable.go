@@ -4,16 +4,19 @@ import (
 	"github.com/go-gl/gl/v4.1-core/gl"
 )
 
+// Drawable object
 type Drawable struct {
 	vao            uint32
 	verticesNumber int32
 }
 
+// Draw object to the window
 func (d *Drawable) Draw() {
 	gl.BindVertexArray(d.vao)
 	gl.DrawElementsWithOffset(gl.TRIANGLES, int32(d.verticesNumber), gl.UNSIGNED_INT, 0)
 }
 
+// Create new drawable with the given vertices and its indices
 func CreateDrawable(verts []float32, indices []uint32) (*Drawable, error) {
 	var vbo, vao, ebo uint32
 

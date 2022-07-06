@@ -33,6 +33,7 @@ func CreateWindow(title string, width, height int, resizable bool) (*glfw.Window
 	return window, nil
 }
 
+// Swap buffers and poll events of the window
 func HandleWindow(window *glfw.Window) {
 	// Swap buffers, which swaps the front and back buffers of the window
 	// (one used for rendering, the other for drawing)
@@ -43,10 +44,12 @@ func HandleWindow(window *glfw.Window) {
 	glfw.PollEvents()
 }
 
+// Destroy window
 func DestroyWindow(window *glfw.Window) {
 	window.Destroy()
 }
 
+// Clear window
 func Clear() {
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 }

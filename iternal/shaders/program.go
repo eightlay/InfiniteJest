@@ -7,18 +7,22 @@ import (
 	"github.com/go-gl/gl/v4.1-core/gl"
 )
 
+// OpenGL program to use for rendering
 type GLProgram struct {
 	program uint32
 }
 
+// Installs a program object as part of current rendering state
 func (p *GLProgram) Use() {
 	gl.UseProgram(p.program)
 }
 
+// Create GLProgram from basic shaders
 func GetBasicProgram() (*GLProgram, error) {
 	return createProgram(VertexShaderSource, FragmentShaderSource)
 }
 
+// Create new program from the given shaders' source strings
 func createProgram(vertexShaderSource, fragmentShaderSource string) (*GLProgram, error) {
 	vertexShader, err := compileShader(vertexShaderSource, gl.VERTEX_SHADER)
 	if err != nil {

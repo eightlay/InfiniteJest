@@ -10,12 +10,14 @@ import (
 )
 
 var (
+	// Vertices of the rectangle
 	rectangle = []float32{
 		0.5, 0.5, 0.0, // top right
 		0.5, -0.5, 0.0, // bottom right
 		-0.5, -0.5, 0.0, // bottom left
 		-0.5, 0.5, 0.0, // top left
 	}
+	// Rectangle's vertices indices to use
 	indices = []uint32{
 		0, 1, 3, // first triangle
 		1, 2, 3, // second triangle
@@ -46,8 +48,8 @@ func main() {
 		panic(fmt.Errorf("could not create program: %v", err))
 	}
 
-	// Create ebo
-	ebo, err := graphics.CreateDrawable(rectangle, indices)
+	// Create Drawable
+	drawable, err := graphics.CreateDrawable(rectangle, indices)
 	if err != nil {
 		panic(fmt.Errorf("could not create vao: %v", err))
 	}
@@ -57,7 +59,7 @@ func main() {
 		window.Clear()
 
 		program.Use()
-		ebo.Draw()
+		drawable.Draw()
 
 		window.Handle()
 	}
