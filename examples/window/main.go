@@ -12,7 +12,7 @@ func main() {
 	runtime.LockOSThread()
 
 	// Init graphics driver
-	err := ui.Init()
+	err := ui.Init(false)
 	if err != nil {
 		panic(fmt.Errorf("could not initilize graphics driver: %v", err))
 	}

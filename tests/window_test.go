@@ -11,7 +11,7 @@ import (
 func TestWindow(t *testing.T) {
 	runtime.LockOSThread()
 
-	ui.Init()
+	ui.Init(false)
 	defer ui.Terminate()
 
 	window, err := ui.CreateWindow("Test", 800, 600, true)

@@ -5,21 +5,25 @@ import (
 	"runtime"
 
 	"github.com/eightlay/InfiniteJest/iternal/graphics"
-	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders"
+	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders2D"
 	"github.com/eightlay/InfiniteJest/iternal/graphics/textures"
 	"github.com/eightlay/InfiniteJest/ui"
 )
 
 var (
-	// Vertices of the triangle
-	triangle = []float32{
+	// Vertices of the rectangle
+	rectangle = []float32{
 		// positions     // texture coords
-		+0.0, +0.5, 0.0, 0.0, 0.0, // top
-		-0.5, -0.5, 0.0, 1.0, 0.0, // left
-		+0.5, -0.5, 0.0, 0.5, 1.0, // right
+		+0.5, +0.5, 0.0, 1.0, 1.0, // top right
+		+0.5, -0.5, 0.0, 1.0, 0.0, // bottom right
+		-0.5, -0.5, 0.0, 0.0, 0.0, // bottom left
+		-0.5, +0.5, 0.0, 0.0, 1.0, // top left
 	}
-	// Triangle's vertices indices to use
-	indices = []uint32{0, 1, 2}
+	// Rectangle's vertices indices to use
+	indices = []uint32{
+		0, 1, 3, // first triangle
+		1, 2, 3, // second triangle
+	}
 )
 
 func main() {
@@ -27,7 +31,7 @@ func main() {
 	runtime.LockOSThread()
 
 	// Init graphics driver
-	err := ui.Init()
+	err := ui.Init(false)
 	if err != nil {
 		panic(fmt.Errorf("could not initilize graphics driver: %v", err))
 	}
@@ -41,13 +45,13 @@ func main() {
 	defer window.Destroy()
 
 	// Create shader
-	shader, err := shaders.GetDefaultShader()
+	shader, err := shaders2D.GetDefaultShader()
 	if err != nil {
 		panic(fmt.Errorf("could not create shader: %v", err))
 	}
 
 	// Create drawable
-	drawable, err := graphics.CreateDrawable(triangle, indices)
+	drawable, err := graphics.CreateDrawable(rectangle, indices)
 	if err != nil {
 		panic(fmt.Errorf("could not create drawable: %v", err))
 	}

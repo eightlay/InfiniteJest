@@ -9,12 +9,18 @@ Game engine written in GO
 - AI engine *(not implemented, in queue)*
 
 ## Examples
-### Available examples
+### Available basic examples
 - ECS system (examples/ecs)
 - ECS system with Events (examples/events)
 - Window creation (examples/window)
-- Triangle creation (examples/triangle) 
-- Rectangle creation (examples/rectangle) 
+
+### Available 2D examples
+- Triangle (examples/triangle) 
+- Rectangle (examples/rectangle) 
+
+### Available 3D examples
+- Isometric (examples/isometric) 
+- Cube (examples/cube) 
 
 ### Usage
 ```

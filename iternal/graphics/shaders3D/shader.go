@@ -1,9 +1,10 @@
-package shaders
+package shaders3D
 
 import (
 	"fmt"
 	"strings"
 
+	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders"
 	"github.com/go-gl/gl/v4.1-core/gl"
 )
 
@@ -38,6 +39,11 @@ func (s *Shader) SetFloat(name string, value float32) {
 	gl.Uniform1f(gl.GetUniformLocation(s.id, gl.Str(name+"\x00")), value)
 }
 
+// Specify the value of a mat4 uniform variable
+func (s *Shader) SetMat4(name string, value *float32) {
+	gl.UniformMatrix4fv(gl.GetUniformLocation(s.id, gl.Str(name+"\x00")), 1, false, value)
+}
+
 // Create default shader
 func GetDefaultShader() (*Shader, error) {
 	return createShader(VertexShaderSource, FragmentShaderSource)
@@ -45,12 +51,12 @@ func GetDefaultShader() (*Shader, error) {
 
 // Create new program from the given shaders' source strings
 func createShader(vertexShaderSource, fragmentShaderSource string) (*Shader, error) {
-	vertexShader, err := compileShader(vertexShaderSource, gl.VERTEX_SHADER)
+	vertexShader, err := shaders.CompileShader(vertexShaderSource, gl.VERTEX_SHADER)
 	if err != nil {
 		return &Shader{0}, err
 	}
 
-	fragmentShader, err := compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER)
+	fragmentShader, err := shaders.CompileShader(fragmentShaderSource, gl.FRAGMENT_SHADER)
 	if err != nil {
 		return &Shader{0}, err
 	}
@@ -77,29 +83,4 @@ func createShader(vertexShaderSource, fragmentShaderSource string) (*Shader, err
 	gl.DeleteShader(fragmentShader)
 
 	return &Shader{program}, nil
-}
-
-// Compile shader by the given source string and shahder type
-func compileShader(source string, shaderType uint32) (uint32, error) {
-	shader := gl.CreateShader(shaderType)
-
-	cstrs, free := gl.Strs(source)
-	gl.ShaderSource(shader, 1, cstrs, nil)
-	free()
-
-	gl.CompileShader(shader)
-
-	var status int32
-	gl.GetShaderiv(shader, gl.COMPILE_STATUS, &status)
-	if status == gl.FALSE {
-		var logLength int32
-		gl.GetShaderiv(shader, gl.INFO_LOG_LENGTH, &logLength)
-
-		log := strings.Repeat("\x00", int(logLength+1))
-		gl.GetShaderInfoLog(shader, logLength, nil, gl.Str(log))
-
-		return 0, fmt.Errorf("failed to compile %v: %v", source, log)
-	}
-
-	return shader, nil
 }

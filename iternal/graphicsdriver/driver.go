@@ -4,9 +4,10 @@ import "fmt"
 
 // Indicate if graphics driver was initialized
 var initialized bool = false
+var engine3D bool = false
 
 // Initialize graphics driver
-func Init() error {
+func Init(use3D bool) error {
 	err := error(nil)
 
 	if !IsInitialized() {
@@ -21,6 +22,7 @@ func Init() error {
 		}
 
 		initialized = true
+		engine3D = use3D
 	} else {
 		err = fmt.Errorf("graphics driver is already initialized")
 	}
@@ -41,4 +43,9 @@ func Terminate() error {
 // Check if graphics driver is initialized
 func IsInitialized() bool {
 	return initialized
+}
+
+// Check if graphics driver is for 3D
+func Is3D() bool {
+	return engine3D
 }

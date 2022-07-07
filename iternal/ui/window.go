@@ -30,6 +30,10 @@ func CreateWindow(title string, width, height int, resizable bool) (*glfw.Window
 	// within the platform window that gets created by GLFW
 	window.MakeContextCurrent()
 
+	if graphicsdriver.Is3D() {
+		graphicsdriver.EnableDepthTest()
+	}
+
 	return window, nil
 }
 

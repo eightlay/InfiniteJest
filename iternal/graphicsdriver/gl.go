@@ -8,3 +8,8 @@ import (
 func InitGL() error {
 	return gl.Init()
 }
+
+func EnableDepthTest() {
+	gl.Enable(gl.DEPTH_TEST)
+	gl.DepthFunc(gl.LESS)
+}

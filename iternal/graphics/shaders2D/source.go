@@ -1,4 +1,4 @@
-package shaders
+package shaders2D
 
 const (
 	// Basic vertex shader
