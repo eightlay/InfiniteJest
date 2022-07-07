@@ -1,24 +1,17 @@
 package ecs_example
 
 import (
+	ij "github.com/eightlay/InfiniteJest"
+
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/eightlay/InfiniteJest/ecs"
 	"github.com/google/uuid"
 )
 
-/* Poistion component */
-type Position struct {
-	Y int
-}
-
-func (*Position) ID() ecs.ComponentID {
-	return "Position"
-}
-
 /* Physics system */
 type Physics struct {
 	entities map[uuid.UUID]*ecs.Entity
-	gravity  int
+	gravity  float64
 }
 
 func (p *Physics) Init() {
@@ -33,8 +26,8 @@ func (p *Physics) Update(em *ecs.EventManager) {
 			panic("Wrong entity in system")
 		}
 
-		pos := c.(*Position)
-		pos.Y -= p.gravity
+		pos := c.(*ij.Position)
+		pos.SubY(p.gravity)
 	}
 }
 
