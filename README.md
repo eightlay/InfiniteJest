@@ -24,12 +24,12 @@ Game engine written in GO
 
 ### Usage
 ```
-cd \*path to example\*<br>
+cd *path to example*
 go run *.go
 ```
 
 ### Usage example
 ```
-cd examples/events<br>
+cd examples/events
 go run *.go
 ```
