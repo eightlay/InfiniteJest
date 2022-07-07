@@ -57,3 +57,23 @@ func DestroyWindow(window *glfw.Window) {
 func Clear() {
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 }
+
+// Check if key is pressed
+func KeyIsPressed(window *glfw.Window, key glfw.Key) bool {
+	return window.GetKey(key) == glfw.Press
+}
+
+// Check if mouse is pressed
+func MouseIsPressed(window *glfw.Window, button glfw.MouseButton) bool {
+	return window.GetMouseButton(button) == glfw.Press
+}
+
+// Set cursor pos callback
+func SetCursorPosCallback(window *glfw.Window, cbfun glfw.CursorPosCallback) {
+	window.SetCursorPosCallback(cbfun)
+}
+
+// Set scroll callback
+func SetScrollCallback(window *glfw.Window, cbfun glfw.ScrollCallback) {
+	window.SetScrollCallback(cbfun)
+}

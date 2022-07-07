@@ -60,6 +60,17 @@ var (
 	}
 )
 
+var (
+	deltatime float32 = 0
+	lastframe float32 = 0
+)
+
+var (
+	firstMouse         = true
+	lastX      float64 = 0
+	lastY      float64 = 0
+)
+
 func main() {
 	// Lock thread
 	runtime.LockOSThread()
@@ -96,6 +107,12 @@ func main() {
 		panic(fmt.Errorf("could not create texture: %v", err))
 	}
 
+	// Create camera
+	camera, err := ui.CreateCamera([3]float32{0, 0, 3}, [3]float32{0, 1, 0}, -90, 0)
+	if err != nil {
+		panic(fmt.Errorf("could not create camera: %v", err))
+	}
+
 	// Use shader
 	shader.Use()
 
@@ -103,29 +120,77 @@ func main() {
 	model := glm.HomogRotate3DX(glm.DegToRad(-55))
 	shader.SetMat4("model", &model[0])
 
-	// View
-	view := glm.Translate3D(0, 0, -5)
-	shader.SetMat4("view", &view[0])
-
-	// Projection
-	projection := glm.Perspective(
-		glm.DegToRad(45), float32(WINDOW_W)/float32(WINDOW_H), 0.1, 100.0,
-	)
-	shader.SetMat4("projection", &projection[0])
+	// Mouse move and scroll callbacks
+	window.SetCursorPosCallback(createMoveCallback(camera, window))
+	window.SetScrollCallback(createScrollCallback(camera))
 
 	// Handle window
 	for window.IsRunning() {
+		currentframe := float32(glfw.GetTime())
+		deltatime = currentframe - lastframe
+		lastframe = currentframe
+
+		processInput(window, camera)
+
 		window.Clear()
 
 		texture.Bind()
 		shader.Use()
 
-		model = glm.HomogRotate3DX(float32(glfw.GetTime()))
-		model = glm.HomogRotate3DY(float32(glfw.GetTime())).Mul4(model)
-		shader.SetMat4("model", &model[0])
+		projection := glm.Perspective(
+			camera.Zoom(), float32(WINDOW_W)/float32(WINDOW_H), 0.1, 100.0,
+		)
+		shader.SetMat4("projection", &projection[0])
+
+		view := camera.ViewMatrix()
+		shader.SetMat4("view", &view[0])
 
 		drawable.Draw()
 
 		window.Handle()
+	}
+}
+
+func processInput(window *ui.Window, camera *ui.Camera) {
+	if window.KeyIsPressed(glfw.KeyW) {
+		camera.MoveKeyboard(ui.CameraForward, deltatime)
+	}
+	if window.KeyIsPressed(glfw.KeyS) {
+		camera.MoveKeyboard(ui.CameraBackward, deltatime)
+	}
+	if window.KeyIsPressed(glfw.KeyA) {
+		camera.MoveKeyboard(ui.CameraLeft, deltatime)
+	}
+	if window.KeyIsPressed(glfw.KeyD) {
+		camera.MoveKeyboard(ui.CameraRight, deltatime)
+	}
+}
+
+func createMoveCallback(camera *ui.Camera, w *ui.Window) func(window *glfw.Window, xpos, ypos float64) {
+	return func(window *glfw.Window, xpos, ypos float64) {
+		if !w.MouseIsPressed(glfw.MouseButtonLeft) {
+			firstMouse = true
+			return
+		}
+
+		if firstMouse {
+			lastX = xpos
+			lastY = ypos
+			firstMouse = false
+		}
+
+		xoff := xpos - lastX
+		yoff := lastY - ypos
+
+		lastX = xpos
+		lastY = ypos
+
+		camera.MoveMouse(float32(xoff), float32(yoff))
+	}
+}
+
+func createScrollCallback(camera *ui.Camera) func(window *glfw.Window, xoff, yoff float64) {
+	return func(window *glfw.Window, xoff, yoff float64) {
+		camera.MoveScroll(float32(yoff))
 	}
 }

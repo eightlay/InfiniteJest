@@ -21,6 +21,7 @@ Game engine written in GO
 ### Available 3D examples
 - Isometric (examples/isometric) 
 - Cube (examples/cube) 
+- Camera (examples/camera) 
 
 ### Usage
 ```
