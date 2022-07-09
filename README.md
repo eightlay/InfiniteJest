@@ -1,6 +1,9 @@
 # InfiteJest
 Game engine written in GO
 
+## Philosophy
+"If you wish to make an apple pie from scratch, you must first invent the univers" - sound like the infinite jest.
+
 ## Features
 - Entity Component System with Events
 - Graphics engine *(not implemented, next step)*
