@@ -17,10 +17,6 @@ Game engine written in GO
 - ECS system with Events (examples/events)
 - Window creation (examples/window)
 
-### Available 2D examples
-- Triangle (examples/triangle) 
-- Rectangle (examples/rectangle) 
-
 ### Available 3D examples
 - Isometric (examples/isometric) 
 - Cube (examples/cube) 

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/eightlay/InfiniteJest/iternal/graphicsdriver"
 	"github.com/go-gl/gl/v4.1-core/gl"
 )
 
@@ -46,10 +45,7 @@ func (s *Shader) SetMat4(name string, value *float32) {
 
 // Create default shader
 func GetDefaultShader() (*Shader, error) {
-	if graphicsdriver.Is3D() {
-		return createShader(vertexShaderSource, fragmentShaderSource)
-	}
-	return createShader(vertexShader2DSource, fragmentShader2DSource)
+	return createShader(vertexShaderSource, fragmentShaderSource)
 }
 
 // Create new program from the given shaders' source strings
