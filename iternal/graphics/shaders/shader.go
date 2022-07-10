@@ -1,10 +1,10 @@
-package shaders3D
+package shaders
 
 import (
 	"fmt"
 	"strings"
 
-	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders"
+	"github.com/eightlay/InfiniteJest/iternal/graphicsdriver"
 	"github.com/go-gl/gl/v4.1-core/gl"
 )
 
@@ -46,17 +46,20 @@ func (s *Shader) SetMat4(name string, value *float32) {
 
 // Create default shader
 func GetDefaultShader() (*Shader, error) {
-	return createShader(VertexShaderSource, FragmentShaderSource)
+	if graphicsdriver.Is3D() {
+		return createShader(vertexShaderSource, fragmentShaderSource)
+	}
+	return createShader(vertexShader2DSource, fragmentShader2DSource)
 }
 
 // Create new program from the given shaders' source strings
 func createShader(vertexShaderSource, fragmentShaderSource string) (*Shader, error) {
-	vertexShader, err := shaders.CompileShader(vertexShaderSource, gl.VERTEX_SHADER)
+	vertexShader, err := compileShader(vertexShaderSource, gl.VERTEX_SHADER)
 	if err != nil {
 		return &Shader{0}, err
 	}
 
-	fragmentShader, err := shaders.CompileShader(fragmentShaderSource, gl.FRAGMENT_SHADER)
+	fragmentShader, err := compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER)
 	if err != nil {
 		return &Shader{0}, err
 	}

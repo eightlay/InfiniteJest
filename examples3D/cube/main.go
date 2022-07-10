@@ -5,7 +5,7 @@ import (
 	"runtime"
 
 	"github.com/eightlay/InfiniteJest/iternal/graphics"
-	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders3D"
+	"github.com/eightlay/InfiniteJest/iternal/graphics/shaders"
 	"github.com/eightlay/InfiniteJest/iternal/graphics/textures"
 	"github.com/eightlay/InfiniteJest/ui"
 	"github.com/go-gl/glfw/v3.3/glfw"
@@ -79,7 +79,7 @@ func main() {
 	defer window.Destroy()
 
 	// Create shader
-	shader, err := shaders3D.GetDefaultShader()
+	shader, err := shaders.GetDefaultShader()
 	if err != nil {
 		panic(fmt.Errorf("could not create shader: %v", err))
 	}

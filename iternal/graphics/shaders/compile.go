@@ -8,7 +8,7 @@ import (
 )
 
 // Compile shader by the given source string and shahder type
-func CompileShader(source string, shaderType uint32) (uint32, error) {
+func compileShader(source string, shaderType uint32) (uint32, error) {
 	shader := gl.CreateShader(shaderType)
 
 	cstrs, free := gl.Strs(source)
