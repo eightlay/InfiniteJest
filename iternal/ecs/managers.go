@@ -7,12 +7,12 @@ import (
 
 // EntityManager operates with entities
 type EntityManager struct {
-	entities []Entity
+	Entities []Entity
 }
 
 // Init EntityManager
 func (sm *EntityManager) Init() {
-	sm.entities = []Entity{}
+	sm.Entities = []Entity{}
 }
 
 // Create a new entity with the given components
@@ -24,16 +24,16 @@ func (em *EntityManager) CreateEntity(comps ...Component) *Entity {
 		e.components[id] = c
 	}
 
-	em.entities = append(em.entities, e)
+	em.Entities = append(em.Entities, e)
 
-	return &em.entities[len(em.entities)-1]
+	return &em.Entities[len(em.Entities)-1]
 }
 
 // Delete the entity by its ID
 func (em *EntityManager) DeleteEntity(id uuid.UUID) {
-	i := slices.IndexFunc(em.entities, func(e Entity) bool { return e.ID == id })
+	i := slices.IndexFunc(em.Entities, func(e Entity) bool { return e.ID == id })
 	if i != -1 {
-		em.entities = slices.Delete(em.entities, i, i+1)
+		em.Entities = slices.Delete(em.Entities, i, i+1)
 	}
 }
 
@@ -84,17 +84,17 @@ func (sm *SystemManager) RemoveEntity(id uuid.UUID) {
 //
 // Events are executed in FIFO order
 type EventManager struct {
-	queue []Event
+	Queue []Event
 }
 
 func (em *EventManager) Init() {
-	em.queue = []Event{}
+	em.Queue = []Event{}
 }
 
 func (em *EventManager) Receive(e Event) {
-	em.queue = append(em.queue, e)
+	em.Queue = append(em.Queue, e)
 }
 
 func (em *EventManager) Clear() {
-	em.queue = nil
+	em.Queue = nil
 }

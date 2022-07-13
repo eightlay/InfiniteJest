@@ -17,27 +17,6 @@ func (s *Shader) Use() {
 	gl.UseProgram(s.id)
 }
 
-// Specify the value of a boolean uniform variable
-func (s *Shader) SetBool(name string, value bool) {
-	var v int32 = 0
-
-	if value {
-		v = 1
-	}
-
-	gl.Uniform1i(gl.GetUniformLocation(s.id, gl.Str(name+"\x00")), v)
-}
-
-// Specify the value of a integer uniform variable
-func (s *Shader) SetInt(name string, value int32) {
-	gl.Uniform1i(gl.GetUniformLocation(s.id, gl.Str(name+"\x00")), value)
-}
-
-// Specify the value of a float uniform variable
-func (s *Shader) SetFloat(name string, value float32) {
-	gl.Uniform1f(gl.GetUniformLocation(s.id, gl.Str(name+"\x00")), value)
-}
-
 // Specify the value of a mat4 uniform variable
 func (s *Shader) SetMat4(name string, value *float32) {
 	gl.UniformMatrix4fv(gl.GetUniformLocation(s.id, gl.Str(name+"\x00")), 1, false, value)

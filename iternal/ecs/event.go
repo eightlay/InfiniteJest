@@ -4,7 +4,7 @@ package ecs
 //
 // Event is synonym for runtime Entity creation
 type Event struct {
-	components []Component
+	Components []Component
 }
 
 func CreateEvent(comps ...Component) Event {
